@@ -4,17 +4,20 @@ module.exports = {
     name: Events.VoiceStateUpdate,
     async execute(oldState, newState) {
 
-        const command = interaction.client.commands.get(newState.channel);
+        const command = newState.channel;
 
-        if (!command) {
-            console.error(`No command matching ${interaction.commandName} was found.`);
+        if (command == "None") {
+            console.error(`No channel matching ${newState.channel} was found.`);
             return;
         }
 
         try {
-            await command.execute(interaction);
+
+            const channel = client.channels.cache.get(1118252232945696841);
+
+            channel.send(`@everyone ${newState.user.username} is in ${newState.channel}. GET ON!`)
         } catch (error) {
-            console.error(`Error executing ${interaction.commandName}`);
+            console.error(`Error executing ${newState.channel}`);
             console.error(error);
         }
     },
